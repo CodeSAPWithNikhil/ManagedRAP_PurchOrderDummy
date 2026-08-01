@@ -1,0 +1,5 @@
+CLASS zcl_bp_r_po_header_nr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zr_po_header_nr.
+ENDCLASS.
+
+CLASS zcl_bp_r_po_header_nr IMPLEMENTATION.
+ENDCLASS.
