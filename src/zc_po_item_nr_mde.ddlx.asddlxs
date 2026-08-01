@@ -1,0 +1,93 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+    headerInfo: {
+        typeName: 'Purchase Order Item',
+        typeNamePlural: 'Purchase Order Items',
+        title: {
+            type: #STANDARD,
+            value: 'PurchasingDocument',
+            label: 'Purchasing Order'
+        },
+        description: {
+            value: 'PurchasingDocumentItem',
+            label: 'Purchasing Order Item'
+            
+        }
+    }
+}
+annotate entity ZC_PO_ITEM_NR
+    with 
+{
+  @UI.facet: [
+    {
+      id: 'GeneralInformation',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'General Information',
+      position: 10
+    }
+  ]
+
+  @EndUserText.label: 'Purchasing Document'
+  @UI.lineItem: [{ position: 10 }]
+  @UI.identification: [{ position: 10 }]
+  PurchasingDocument;
+
+  @EndUserText.label: 'Purchasing Document Item'
+  @UI.lineItem: [{ position: 20 }]
+  @UI.identification: [{ position: 20}]
+  PurchasingDocumentItem;
+
+  @EndUserText.label: 'Material'
+  @UI.lineItem: [{ position: 30 }]
+  @UI.identification: [{ position: 30 }]
+    @Consumption.valueHelpDefinition: [{
+      entity: {
+          name: 'zmaterial_master_nr',
+          element: 'material_id'
+      },
+      distinctValues: true
+  }]
+  Material_Id;
+
+  @EndUserText.label: 'Order Quantity'
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  OrderQuantity;
+
+  @EndUserText.label: 'Order Quantity Unit'
+//  @UI.lineItem: [{ position: 50 }]
+//  @UI.identification: [{ position: 50 }]
+  OrderQuantityUnit;
+
+  @EndUserText.label: 'Net Price'
+  @UI.lineItem: [{ position: 60 }]
+  @UI.identification: [{ position: 60 }]
+  NetPriceAmount;
+
+  @EndUserText.label: 'Currency'
+//  @UI.lineItem: [{ position: 70 }]
+//  @UI.identification: [{ position: 70  }]
+  NetPriceCurrency;
+
+  @EndUserText.label: 'Total Price'
+  @UI.lineItem: [{ position: 80 }]
+  @UI.identification: [{ position: 80  }]
+  TotalPrice;
+
+  @EndUserText.label: 'Created On'
+  @UI.identification: [{ position: 90  }]
+  CreatedAt;
+
+  @EndUserText.label: 'Created By'
+  @UI.identification: [{ position: 100  }]
+  CreatedBy;
+
+  @EndUserText.label: 'Last Changed On'
+  @UI.identification: [{ position: 110 }]
+  LastChangeAt;
+
+  @EndUserText.label: 'Last Changed By'
+  @UI.identification: [{ position: 120  }]
+  LastChangeBy;
+}

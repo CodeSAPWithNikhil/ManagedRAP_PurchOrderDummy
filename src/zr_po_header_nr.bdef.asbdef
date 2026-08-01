@@ -1,0 +1,77 @@
+managed implementation in class zcl_bp_r_po_header_nr unique;
+strict ( 2 );
+
+define behavior for ZR_PO_HEADER_NR //alias <alias_name>
+persistent table zpo_header_nr
+lock master
+authorization master ( global )
+etag master LastLocalChangeAt
+early numbering
+{
+  create; //( authorization : global );
+  update ( features : instance );
+  delete;
+  field ( readonly ) PurchasingDocument, TotalNetAmount, CreatedByUser, CreationDateTime, LastLocalChangeAt, LastChangeDateTime, LastChangedByUser, OverallProcessingStatus;
+  // determination calculateTotalPrice on modify {  create; }
+  determination initializeStatus on save { create;  }
+  action recalctotalPrice;
+  action ( features : instance ) approvePo;
+  action ( features : instance ) rejectPo;
+  association _PurchaseOrderItems { create; }
+  mapping for zpo_header_nr control zpo_header_ctrl
+    {
+      PurchasingDocument      = po_no;
+      Supplier                = vendor_id;
+      PurchasingDocumentDate  = po_date;
+      TransactionCurrency     = currency;
+      OverallProcessingStatus = status;
+      TotalNetAmount          = total_amount;
+      CreationDateTime        = created_at;
+      CreatedByUser           = created_by;
+      LastChangeDateTime      = last_change_at;
+      LastChangedByUser       = last_change_by;
+      LastLocalChangeAt       = last_local_change_at;
+    }
+  side effects { action recalctotalPrice affects field TotalNetAmount;
+                 action approvePo affects field OverallProcessingStatus;
+                 action rejectPo affects field OverallProcessingStatus; }
+}
+
+define behavior for ZR_PO_ITEM_NR //alias <alias_name>
+persistent table zpo_item_nr
+lock dependent by _PurchasingOrder
+authorization dependent by _PurchasingOrder
+etag dependent by _PurchasingOrder
+early numbering
+{
+  update ( features : instance );
+  delete;
+  field ( readonly ) PurchasingDocument, PurchasingDocumentItem, TotalPrice, CreatedBy, CreatedAt, LastChangeAt, LastChangeBy;
+  association _PurchasingOrder;
+  determination calculateTotalNetItem on modify { field NetPriceAmount; }
+  determination calculateTotalPrice on modify { field TotalPrice; }
+
+  mapping for zpo_item_nr control zpo_item_ctrl
+    {
+      PurchasingDocument     = po_no;
+      PurchasingDocumentItem = item_no;
+      Material_Id            = material_id;
+      OrderQuantity          = qty;
+      OrderQuantityUnit      = uom;
+      NetPriceAmount         = price;
+      NetPriceCurrency       = currency;
+      TotalPrice             = total_price_qty;
+      CreatedAt              = created_at;
+      CreatedBy              = created_by;
+      LastChangeAt           = last_change_at;
+      LastChangeBy           = last_change_by;
+      LastChangeLocalAt      = last_change_local_at;
+    }
+  side effects
+  { field NetPriceAmount affects field TotalPrice;
+    field OrderQuantity affects field TotalPrice;
+    field NetPriceCurrency affects field TotalPrice;
+    field OrderQuantityUnit affects field TotalPrice;
+    field TotalPrice affects field _PurchasingOrder.TotalNetAmount; }
+
+}
