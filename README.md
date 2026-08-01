@@ -13,7 +13,7 @@ This project is intended as a learning/demo application that showcases end-to-en
 - ✅ CRUD Operations
 - ✅ Fiori Elements List Report & Object Page
 - ✅ CDS UI Annotations
-- ✅ OData V4 Service
+- ✅ OData V2 Service
 - ✅ Purchase Order Approval & Rejection Actions
 - ✅ Dynamic Feature Control
 - ✅ Search, Filter & Sorting
@@ -28,7 +28,7 @@ This project is intended as a learning/demo application that showcases end-to-en
 - CDS Views
 - Behavior Definition & Implementation
 - Service Definition
-- Service Binding (OData V4)
+- Service Binding (OData V2)
 - Fiori Elements
 - Eclipse ADT
 
