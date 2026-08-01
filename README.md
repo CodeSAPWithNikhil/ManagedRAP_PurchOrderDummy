@@ -1,190 +1,49 @@
 # Purchase Order Management - RAP Demo Application
-Overview:
 
-This repository contains a dummy Purchase Order Management application developed using the ABAP RESTful Application Programming Model (Managed RAP) on SAP S/4HANA.
+A simple **Purchase Order Management** application built using the **ABAP RESTful Application Programming Model (Managed RAP)** on **SAP S/4HANA**.
 
-The application demonstrates the implementation of a complete RAP application using custom database tables and dummy purchase order data. It is intended for learning, proof-of-concept (POC), and RAP development reference purposes.
+This project is intended as a learning/demo application that showcases end-to-end RAP development using **custom database tables** and **dummy purchase order data**. It is **not integrated with SAP MM standard tables (EKKO/EKPO)**.
 
-Note: This application is not integrated with standard SAP MM Purchasing (EKKO/EKPO). All data is stored in custom tables.
+---
 
-Features
-Managed RAP Business Object
-Custom Header and Item Tables
-CRUD Operations
-Create Purchase Order
-Update Purchase Order
-Delete Purchase Order
-Purchase Order List Report
-Object Page
-Search and Filter Support
-Draft Handling (if enabled)
-Custom Actions
-Approve Purchase Order
-Reject Purchase Order
-Dynamic Feature Control
-Enable/Disable actions based on processing status
-UI Annotations using CDS
-Fiori Elements Application
-Dummy Purchase Order Data
-Technologies Used
-SAP S/4HANA
-ABAP RESTful Application Programming Model (Managed RAP)
-CDS Views
-Behavior Definition
-Behavior Implementation
-Service Definition
-Service Binding (OData V4)
-Fiori Elements
-Eclipse ADT
-Application Architecture
-Custom Tables
-     │
-     ▼
-Root CDS View
-     │
-     ▼
-Interface View
-     │
-     ▼
-Projection View
-     │
-     ▼
-Behavior Definition (Managed)
-     │
-     ▼
-Behavior Implementation
-     │
-     ▼
-Service Definition
-     │
-     ▼
-Service Binding (OData V4)
-     │
-     ▼
-Fiori Elements UI
-Database Tables
-Header Table
+## Features
 
-Stores Purchase Order header information.
+- ✅ Managed RAP Business Object
+- ✅ Custom Header & Item Tables
+- ✅ CRUD Operations
+- ✅ Fiori Elements List Report & Object Page
+- ✅ CDS UI Annotations
+- ✅ OData V4 Service
+- ✅ Purchase Order Approval & Rejection Actions
+- ✅ Dynamic Feature Control
+- ✅ Search, Filter & Sorting
+- ✅ Dummy Purchase Order Data
 
-Example fields:
+---
 
-Field	Description
-PurchasingDocument	Purchase Order Number
-Supplier	Supplier ID
-PurchasingDocumentDate	PO Date
-TransactionCurrency	Currency
-OverallProcessingStatus	Processing Status
-TotalNetAmount	Total Amount
-CreatedAt	Created Timestamp
-CreatedBy	Created By
-LastChangedAt	Last Changed Timestamp
-LastChangedBy	Last Changed By
-Item Table
+## Technology Stack
 
-Stores Purchase Order item details.
+- SAP S/4HANA
+- ABAP RAP (Managed)
+- CDS Views
+- Behavior Definition & Implementation
+- Service Definition
+- Service Binding (OData V4)
+- Fiori Elements
+- Eclipse ADT
 
-Example fields:
+---
 
-Field	Description
-PurchasingDocument	Purchase Order Number
-PurchasingDocumentItem	Item Number
-Material	Material
-OrderQuantity	Quantity
-OrderQuantityUnit	Unit
-NetPrice	Price
-NetPriceCurrency	Currency
-TotalPrice	Item Total
-Purchase Order Status
+## Project Structure
 
-The application supports the following dummy processing statuses.
-
-Status	Description
-O	Open
-A	Approved
-R	Released
-C	Closed
-X	Rejected
-Custom Actions
-Approve Purchase Order
-
-Changes the Purchase Order status to Approved.
-
-Action is only available when allowed by the current document status.
-
-Reject Purchase Order
-
-Changes the Purchase Order status to Rejected.
-
-Action availability is controlled dynamically using RAP Feature Control.
-
-Dynamic Feature Control
-
-The application uses RAP Feature Control to enable or disable actions and update capability based on the Purchase Order status.
-
-Example:
-
-Status	Update	Approve	Reject
-Open	✔	✔	✔
-Approved	✖	✖	✔
-Released	✖	✖	✔
-Closed	✖	✖	✖
-Rejected	✔	✔	✖
-User Interface
-
-The application provides a Fiori Elements List Report and Object Page.
-
-List Report
-
-Features include:
-
-Purchase Order List
-Smart Filter Bar
-Search
-Sorting
-Filtering
-Create
-Delete
-Approve
-Reject
-Navigation to Object Page
-
-The list displays information such as:
-
-Purchase Order
-Supplier
-Document Date
-Currency
-Overall Processing Status
-Total Net Amount
-Object Page
-
-Displays complete Purchase Order details including:
-
-Header Information
-Item Details
-Processing Status
-Administrative Fields
-Sample Data
-
-The application contains dummy Purchase Orders with different statuses to demonstrate RAP functionality.
-
-Example:
-
-Purchase Order	Supplier	Status
-21000000	V1300	Rejected
-22000000	V1500	Closed
-23000000	V2000	Released
-24000000	V1200	Open
-27000000	V3000	Approved
-Project Structure
+```
 src/
 │
 ├── Database Tables
-│   ├── Header Table
-│   └── Item Table
+│   ├── Purchase Order Header
+│   └── Purchase Order Item
 │
-├── CDS
+├── CDS Views
 │   ├── Interface Views
 │   ├── Projection Views
 │   └── Metadata Extensions
@@ -198,19 +57,190 @@ src/
 │   ├── Service Definition
 │   └── Service Binding
 │
-└── Fiori Elements
-Learning Objectives
+└── Fiori Elements Application
+```
 
-This project demonstrates:
+---
 
-Managed RAP Development
-CDS Data Modeling
-Behavior Definitions
-Behavior Implementations
-Actions
-Feature Control
-Fiori Elements
-OData V4 Service Exposure
-CRUD Operations
-Custom Business Objects
-<img width="1902" height="877" alt="image" src="https://github.com/user-attachments/assets/ff5c7f9f-de52-4cd6-b9bb-cea1842fdb19" />
+## Data Model
+
+### Purchase Order Header
+
+| Field | Description |
+|--------|-------------|
+| PurchasingDocument | Purchase Order Number |
+| Supplier | Supplier ID |
+| PurchasingDocumentDate | Document Date |
+| TransactionCurrency | Currency |
+| OverallProcessingStatus | Processing Status |
+| TotalNetAmount | Total Amount |
+
+### Purchase Order Item
+
+| Field | Description |
+|--------|-------------|
+| PurchasingDocument | Purchase Order Number |
+| PurchasingDocumentItem | Item Number |
+| Material | Material |
+| OrderQuantity | Quantity |
+| OrderQuantityUnit | Unit |
+| NetPrice | Price |
+| TotalPrice | Total Price |
+
+---
+
+## Processing Status
+
+| Status | Description |
+|--------|-------------|
+| O | Open |
+| A | Approved |
+| R | Released |
+| C | Closed |
+| X | Rejected |
+
+---
+
+## Custom Actions
+
+### Approve Purchase Order
+
+Updates the Purchase Order status to **Approved**.
+
+### Reject Purchase Order
+
+Updates the Purchase Order status to **Rejected**.
+
+Both actions are controlled dynamically using RAP Feature Control.
+
+---
+
+## Dynamic Feature Control
+
+Action availability depends on the current Purchase Order status.
+
+| Status | Update | Approve | Reject |
+|--------|:------:|:-------:|:------:|
+| Open | ✅ | ✅ | ✅ |
+| Approved | ❌ | ❌ | ✅ |
+| Released | ❌ | ❌ | ✅ |
+| Closed | ❌ | ❌ | ❌ |
+| Rejected | ✅ | ✅ | ❌ |
+
+---
+
+## Application Screens
+
+### List Report
+
+- Create Purchase Orders
+- Delete Purchase Orders
+- Approve Purchase Orders
+- Reject Purchase Orders
+- Smart Filter Bar
+- Search
+- Sorting
+- Filtering
+- Navigation to Object Page
+
+### Object Page
+
+Displays:
+
+- Purchase Order Header
+- Purchase Order Items
+- Status Information
+- Administrative Fields
+
+---
+
+## Sample Data
+
+The application comes with dummy purchase orders having various processing statuses.
+
+| Purchase Order | Supplier | Status |
+|----------------|----------|--------|
+| 21000000 | V1300 | Rejected |
+| 22000000 | V1500 | Closed |
+| 23000000 | V2000 | Released |
+| 24000000 | V1200 | Open |
+| 27000000 | V3000 | Approved |
+
+---
+
+## Architecture
+
+```
+Custom Tables
+      │
+      ▼
+Root CDS View
+      │
+      ▼
+Projection CDS
+      │
+      ▼
+Behavior Definition
+      │
+      ▼
+Behavior Implementation
+      │
+      ▼
+Service Definition
+      │
+      ▼
+Service Binding (OData V4)
+      │
+      ▼
+Fiori Elements Application
+```
+
+---
+
+## Learning Topics Covered
+
+- Managed RAP Development
+- CDS Data Modeling
+- CRUD Operations
+- RAP Actions
+- Feature Control
+- CDS UI Annotations
+- Fiori Elements
+- OData V4
+- Custom Business Objects
+
+---
+
+## Prerequisites
+
+- SAP S/4HANA
+- Eclipse ADT
+- Fiori Launchpad
+- OData V4 Support
+
+---
+
+## Future Enhancements
+
+- Draft Handling
+- Validations
+- Determinations
+- Value Helps
+- Attachment Management
+- Workflow Integration
+- Authorization Control
+- Unit Tests
+- Excel Export
+- Analytical List Page
+
+---
+
+## Screenshot
+
+<img width="1902" height="877" alt="image" src="https://github.com/user-attachments/assets/c632aa77-29bf-42a3-9e8c-474b8313b3ed" />
+
+---
+
+## Purpose
+
+This repository serves as a simple reference implementation of a **Managed RAP Purchase Order application** using custom tables and dummy data. It is intended for learning, demonstrations, proof-of-concepts, and interview preparation for modern ABAP RAP development.
