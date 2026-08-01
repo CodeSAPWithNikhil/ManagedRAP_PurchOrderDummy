@@ -16,5 +16,6 @@ CLASS zcl_test_nr IMPLEMENTATION.
 
 
   METHOD if_oo_adt_classrun~main.
+  out->write( 'Hello World' ).
   ENDMETHOD.
 ENDCLASS.
